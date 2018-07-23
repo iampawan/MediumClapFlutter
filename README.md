@@ -23,7 +23,7 @@ The source code is **100% Dart**, and everything resides in the [/lib](https://g
 
 [Let's Flutter](https://www.facebook.com/groups/425920117856409/)
 
-<img height="300px"  src="https://thumbs.gfycat.com/AgonizingFavoriteKillerwhale-size_restricted.gif"/>
+<img height="500px"  src="https://thumbs.gfycat.com/AgonizingFavoriteKillerwhale-size_restricted.gif"/>
 
 ## 💻 Installation
 In the `dependencies:` section of your `pubspec.yaml`, add the following line:
@@ -34,7 +34,7 @@ In the `dependencies:` section of your `pubspec.yaml`, add the following line:
 
 ## ❔ Usage
 
-###ClapFAB for Icon
+### ClapFAB for Icon
 
 ```dart
 import 'package:medium_clap_flutter/medium_clap_flutter.dart';
@@ -59,7 +59,7 @@ class MyWidget extends StatelessWidget {
 
 ```
 
-###ClapFAB for Image
+### ClapFAB for Image
 
 ```dart
 import 'package:medium_clap_flutter/medium_clap_flutter.dart';
