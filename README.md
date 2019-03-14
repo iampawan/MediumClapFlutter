@@ -145,25 +145,41 @@ All customizable attributes for ClapFab
         <td>Colors.white</td>
         <td>The Background color of the ClabFab button</td>
     </tr>
+    <tr>
+        <td>initCounter</td>
+        <td>0</td>
+        <td>Initial counter value</td>
+    </tr>
+    <tr>
+        <td>maxCounter</td>
+        <td>NOT_LIMIT_INCREMENT (-1)</td>
+        <td>Maximum counter value</td>
+    </tr>
     
     
 </table>
 
 ## Clap Count
-Use this property "clapFabCallback" to get the clap count
-```
+Use one of this properties `clapFabCallback` or `clapUpCallback` to get the clap count
+```dart
 ClapFAB.image(
         clapFabCallback: (int counter)=>print(counter),
       );
       
 ```
 OR
-```
+```dart
 ClapFAB.icon(
         clapFabCallback: (int counter)=>print(counter),
       );
-      
 ```
+OR
+```dart
+ClapFAB.icon(
+        clapUpCallback: (int counter)=>print(counter),
+      );
+```
+
 ## 📃 Inspired from
 * Medium Clap By Kartik Sharma [https://github.com/Kartik1607/FlutterUI/tree/master/MediumClapAnimation/medium_clap](https://github.com/Kartik1607/FlutterUI/tree/master/MediumClapAnimation/medium_clap)
 * MediumClap-Android By Wajahat Karim [https://github.com/wajahatkarim3/MediumClap-Android](https://github.com/wajahatkarim3/MediumClap-Android)
