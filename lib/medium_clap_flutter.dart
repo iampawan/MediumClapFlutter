@@ -5,23 +5,64 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+/// A Custom Floating Action Button (FAB) library like clapping effect on Medium.
 class ClapFAB extends StatefulWidget {
+  /// The color of count's circle background
   final countCircleColor;
+
+  /// The color of count's circle text
   final countTextColor;
+
+  /// Whether to have shadow or not around ClapFab button
   final hasShadow;
+
+  /// The color of the shadow
   final shadowColor;
+
+  /// The outline color/ border color of the ClabFab button
   final floatingOutlineColor;
+
+  /// The Background color of the ClabFab button
   final floatingBgColor;
+
+  /// The color of sparkels around the count
   final sparkleColor;
+
+  /// The default icon of the ClapFab button
   final defaultIcon;
+
+  /// The color of default icon of the ClapFab button
   final defaultIconColor;
+
+  /// The filled icon after clapping of the ClapFab button
   final filledIcon;
+
+  /// The filled icon color after clapping of the ClapFab button
   final filledIconColor;
+
+  /// On Tap Down callback
   final clapFabCallback;
+
+  /// On Tap Up callback
+  final clapUpCallback;
+
+  /// The default image of the ClapFab button
   final defaultImage;
+
+  /// The color of default image of the ClapFab button
   final defaultImageColor;
+
+  /// The filled image after clapping of the ClapFab button
   final filledImage;
+
+  /// The color of filled image of the ClapFab button
   final filledImageColor;
+
+  /// Starting counter value (default 0)
+  final initCounter;
+
+  /// Maximum counter value (default -1, which will not limit increment)
+  final maxCounter;
 
   const ClapFAB.icon(
       {this.countCircleColor = Colors.blue,
@@ -35,7 +76,10 @@ class ClapFAB extends StatefulWidget {
       this.sparkleColor = Colors.blue,
       this.filledIcon = Icons.favorite,
       this.filledIconColor = Colors.blue,
-      this.clapFabCallback})
+      this.initCounter = 0,
+      this.maxCounter = -1,
+      this.clapFabCallback,
+      this.clapUpCallback})
       : defaultImage = null,
         defaultImageColor = null,
         filledImage = null,
@@ -53,7 +97,10 @@ class ClapFAB extends StatefulWidget {
       this.defaultImageColor = Colors.blue,
       this.filledImageColor = Colors.blue,
       this.filledImage = "images/clap.png",
-      this.clapFabCallback})
+      this.initCounter = 0,
+      this.maxCounter = -1,
+      this.clapFabCallback,
+      this.clapUpCallback})
       : defaultIcon = null,
         defaultIconColor = null,
         filledIcon = null,
@@ -82,6 +129,7 @@ class _ClapFABState extends State<ClapFAB> with TickerProviderStateMixin {
   initState() {
     super.initState();
     random = Random();
+    counter = widget.initCounter;
     scoreInAnimationController =
         AnimationController(duration: Duration(milliseconds: 150), vsync: this);
     scoreInAnimationController.addListener(() {
@@ -131,10 +179,20 @@ class _ClapFABState extends State<ClapFAB> with TickerProviderStateMixin {
   void increment(Timer t) {
     scoreSizeAnimationController.forward(from: 0.0);
     sparklesAnimationController.forward(from: 0.0);
-    setState(() {
-      counter++;
-      _sparklesAngle = random.nextDouble() * (2 * pi);
-    });
+
+    if (_shouldIncrement()) {
+      setState(() {
+        counter++;
+        _sparklesAngle = random.nextDouble() * (2 * pi);
+      });
+    }
+  }
+
+  bool _shouldIncrement() {
+    if (widget.maxCounter == -1) {
+      return true;
+    }
+    return counter < widget.maxCounter;
   }
 
   void onTapDown(TapDownDetails tap) {
@@ -161,6 +219,7 @@ class _ClapFABState extends State<ClapFAB> with TickerProviderStateMixin {
       scoreOutAnimationController.forward(from: 0.0);
       _scoreWidgetStatus = ScoreWidgetStatus.BECOMING_INVISIBLE;
     });
+    if (widget.clapUpCallback != null) widget.clapUpCallback(counter);
     holdTimer.cancel();
   }
 
