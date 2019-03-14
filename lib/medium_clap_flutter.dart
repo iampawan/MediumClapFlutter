@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 
 /// A Custom Floating Action Button (FAB) library like clapping effect on Medium.
 class ClapFAB extends StatefulWidget {
+  static const int NOT_LIMIT_INCREMENT = -1;
+
   /// The color of count's circle background
   final countCircleColor;
 
@@ -61,7 +63,7 @@ class ClapFAB extends StatefulWidget {
   /// Starting counter value (default 0)
   final initCounter;
 
-  /// Maximum counter value (default -1, which will not limit increment)
+  /// Maximum counter value (default SHOULD_NOT_INCREMENT, which will not limit increment)
   final maxCounter;
 
   const ClapFAB.icon(
@@ -77,7 +79,7 @@ class ClapFAB extends StatefulWidget {
       this.filledIcon = Icons.favorite,
       this.filledIconColor = Colors.blue,
       this.initCounter = 0,
-      this.maxCounter = -1,
+      this.maxCounter = NOT_LIMIT_INCREMENT,
       this.clapFabCallback,
       this.clapUpCallback})
       : defaultImage = null,
@@ -98,7 +100,7 @@ class ClapFAB extends StatefulWidget {
       this.filledImageColor = Colors.blue,
       this.filledImage = "images/clap.png",
       this.initCounter = 0,
-      this.maxCounter = -1,
+      this.maxCounter = NOT_LIMIT_INCREMENT,
       this.clapFabCallback,
       this.clapUpCallback})
       : defaultIcon = null,
@@ -188,12 +190,9 @@ class _ClapFABState extends State<ClapFAB> with TickerProviderStateMixin {
     }
   }
 
-  bool _shouldIncrement() {
-    if (widget.maxCounter == -1) {
-      return true;
-    }
-    return counter < widget.maxCounter;
-  }
+  bool _shouldIncrement() => widget.maxCounter == ClapFAB.NOT_LIMIT_INCREMENT
+      ? true
+      : counter < widget.maxCounter;
 
   void onTapDown(TapDownDetails tap) {
     // User pressed the button. This can be a tap or a hold.
